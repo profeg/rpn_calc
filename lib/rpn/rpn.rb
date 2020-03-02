@@ -15,7 +15,7 @@ module Rpn
       rpn = Rpn::Executor.new(input, @@stack.dup)
 
       # update global stack if correct
-      @@stack = rpn.result if @@stack != rpn.result
+      @@stack = rpn.new_stack if @@stack != rpn.new_stack
 
       # print stack
       puts @@stack.to_s

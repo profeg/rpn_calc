@@ -1,11 +1,11 @@
 module Rpn
   # Execute input string
   class Executor
-    attr_reader :result
+    attr_reader :new_stack
 
     def initialize(input, stack)
       @input = input
-      @result = stack
+      @new_stack = stack
       @input.split(' ').each { |i| consume(i) }
     end
 
@@ -19,13 +19,13 @@ module Rpn
     end
 
     def push(item)
-      @result.push item.value
+      @new_stack.push item.value
     end
 
     def execute(item)
-      raise StandardError, 'Two variables need for this operation' if @result.size < 2
+      raise StandardError, 'Two variables need for this operation' if @new_stack.size < 2
 
-      x, y = @result.pop(2)
+      x, y = @new_stack.pop(2)
       result =
         if item.division?
           divide(x, y)
@@ -33,7 +33,7 @@ module Rpn
           x.public_send(item.value, y)
         end
 
-      @result.push result
+      @new_stack.push result
     end
 
     def divide(x, y)

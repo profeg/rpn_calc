@@ -30,21 +30,18 @@ module Rpn
         if item.division?
           divide(x, y)
         else
-          eval("#{x} #{item.value} #{y}")
+          x.public_send(item.value, y)
         end
 
       @result.push result
     end
 
     def divide(x, y)
-      result = x.fdiv(y)
+      div_result = x.fdiv(y)
 
-      raise StandardError, 'Can\'t divide to zero' unless result.finite?
+      raise StandardError, 'Can\'t divide to zero' unless div_result.finite?
 
-      if x.is_a?(Integer) && y.is_a?(Integer) && result.modulo(1) == 0.0
-        result = result.floor
-      end
-      result
+      div_result
     end
   end
 end

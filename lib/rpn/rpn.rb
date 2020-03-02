@@ -1,4 +1,5 @@
 module Rpn
+  # Consciously selected class variable as a global stack holder
   @@stack = []
   
   def self.run
